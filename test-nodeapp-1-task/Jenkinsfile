@@ -1,0 +1,17 @@
+pipeline{
+
+// Running on any agent
+agent any 
+ 
+ stages{
+
+   stage(" Git checkout the branch"){
+
+    steps{
+        sh "echo Succesuuly checking out"
+    }
+   }
+
+ }
+
+}
