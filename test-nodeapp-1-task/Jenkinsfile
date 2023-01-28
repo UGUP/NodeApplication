@@ -1,17 +1,14 @@
-pipeline{
-
-// Running on any agent
-agent any 
- 
- stages{
-
-   stage(" Git checkout the branch"){
-
-    steps{
-        sh "echo Succesuuly checking out"
+pipeline {
+    agent { label 'my-label' }
+    stages {
+        stage('Clone') {
+            steps {
+                sshagent(['sshcredentials']) {
+                    git branch: 'main',
+                    credentialsId: 'sshcredentials',
+                    url: 'https://github.com/UGUP/NodeApplication.git'
+                }
+            }
+        }
     }
-   }
-
- }
-
 }
