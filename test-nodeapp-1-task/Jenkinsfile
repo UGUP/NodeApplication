@@ -50,7 +50,7 @@ pipeline
     agent { label 'node-app' }
   steps {
     script {
-    def apphost_tag = sh(script: def apphost_tag = sh(script: "docker images --format \"{{.CreatedAt}}\t{{.Repository}}:{{.Tag}}\" | sort -r | head -n 1 | awk -v FS=\":\" '{print $NF}' | awk -F \"v\" '{print $NF}'", returnStdout: true).trim()
+    def apphost_tag = sh(script: def apphost_tag = sh(script: "docker images --format \"{{.CreatedAt}}\t{{.Repository}}:{{.Tag}}\" | sort -r | head -n 1 | awk -v FS=\":\" '{print $NF}' | awk -F \"v\" '{print $NF}'", returnStdout: true).trim())
 
          if(apphost_tag < ${BUILD_NUMBER}){
           sh "doker stop node-app"
