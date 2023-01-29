@@ -12,7 +12,7 @@ pipeline {
         }
        stage('Change directory') {
            steps {
-            dir("folder") {
+            dir("test-nodeapp-1-task") {
                 sh "pwd"
             }  
         }
