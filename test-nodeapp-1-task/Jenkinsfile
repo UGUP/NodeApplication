@@ -10,19 +10,19 @@ pipeline {
                 }
             }
         }
-    //    stage('Change directory') {
-    //        steps {
-    //         dir("test-nodeapp-1-task") {
-    //             sh "pwd"
-    //         }  
-    //     }
-    //   }
+       stage('Change directory') {
+           steps {
+            dir("test-nodeapp-1-task") {
+                sh "pwd"
+            }  
+        }
+      }
 
-    //   stage('Build a Docker Image'){
-    //     steps {
-    //         sh "docker build -t node-application:$BUILD_NUMBER .";
-    //     }
-    //   }
+      stage('Build a Docker Image'){
+        steps {
+            sh "docker build -t node-application:$BUILD_NUMBER .";
+        }
+      }
     
     // stage('Build and Push Docker Image') {
     //   steps {
