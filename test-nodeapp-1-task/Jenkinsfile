@@ -31,13 +31,14 @@ pipeline
         sh "docker push 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
       }
     }
-    agent { label 'node-app' }
     stage{
+    agent { label 'node-app' }
      steps {
        sh "sudo apt-get update"
   }
 }
   stage('Pull latest image from ECR'){
+   agent { label 'node-app' }
   steps {
     sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 374911492262.dkr.ecr.us-east-1.amazonaws.com"
     sh "docker pull 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
@@ -46,6 +47,7 @@ pipeline
   }
 
   stage('Get the older image build number and verify it with new build number') {
+    agent { label 'node-app' }
   steps {
     script {
     def apphost_tag = sh(script: "docker images --format \"{{.CreatedAt}}\t{{.Repository}}:{{.Tag}}\" | sort -r | head -n 1 | awk -F \":\" '{print $NF}' | awk -F \"v\" '{print $NF}'", returnStdout: true).trim()
