@@ -18,6 +18,13 @@ pipeline {
         }
       }
 
+       stages {
+        stage('Install Docker') {
+            steps {
+                sh 'sudo apt-get update && sudo apt-get install docker.io -y'
+            }
+        }
+        
       stage('Build a Docker Image'){
         steps {
             sh "docker build -t node-application:$BUILD_NUMBER .";
