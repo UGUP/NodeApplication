@@ -10,24 +10,24 @@ pipeline {
                 }
             }
         }
-       stage('Checkout code') {
-           steps {
-               checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:UGUP/NodeApplication.git']]])
-               dir('test-nodeapp-1-task') {
-          // checkout to the specific branch or commit if needed
-        }
-      }
-    }
-    stage('Build and Push Docker Image') {
-      steps {
-        script {
-          def app = docker.build("-t test-nodeapp-1-task:${env.BUILD_NUMBER} test-nodeapp-1-task")
+    //    stage('Checkout code') {
+    //        steps {
+    //            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:UGUP/NodeApplication.git']]])
+    //            dir('test-nodeapp-1-task') {
+    //       // checkout to the specific branch or commit if needed
+    //     }
+    //   }
+    // }
+    // stage('Build and Push Docker Image') {
+    //   steps {
+    //     script {
+    //       def app = docker.build("-t test-nodeapp-1-task:${env.BUILD_NUMBER} test-nodeapp-1-task")
           
-          sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 017706783036.dkr.ecr.us-east-1.amazonaws.com'
-          app.tag("017706783036.dkr.ecr.us-east-1.amazonaws.com/node-application:${env.BUILD_NUMBER}")
-          app.push("017706783036.dkr.ecr.us-east-1.amazonaws.com/node-application:${env.BUILD_NUMBER}")
-        }
-      }
-    }
+    //       sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 017706783036.dkr.ecr.us-east-1.amazonaws.com'
+    //       app.tag("017706783036.dkr.ecr.us-east-1.amazonaws.com/node-application:${env.BUILD_NUMBER}")
+    //       app.push("017706783036.dkr.ecr.us-east-1.amazonaws.com/node-application:${env.BUILD_NUMBER}")
+    //     }
+    //   }
+    // }
    }
 }
