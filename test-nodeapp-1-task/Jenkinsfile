@@ -3,9 +3,9 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                sshagent(['sshcredentials5']) {
+                sshagent(['git-cred']) {
                     git branch: 'main',
-                    credentialsId: 'sshcredentials5',
+                    credentialsId: 'git-cred',
                     url: 'git@github.com:UGUP/NodeApplication.git'
                 }
             }
@@ -20,9 +20,7 @@ pipeline {
 
       stage('Build a Docker Image'){
         steps {
-            script{
-                   dockerImage = docker.build node-application 
-            }
+            sh docker build -t node-application:$v{BUILD_NUMBER} .
         }
       }
     
