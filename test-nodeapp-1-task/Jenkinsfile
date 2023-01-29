@@ -3,9 +3,9 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                sshagent(['sshcredentials3']) {
+                sshagent(['sshcredentials5']) {
                     git branch: 'main',
-                    credentialsId: 'sshcredentials3',
+                    credentialsId: 'sshcredentials5',
                     url: 'git@github.com:UGUP/NodeApplication.git'
                 }
             }
