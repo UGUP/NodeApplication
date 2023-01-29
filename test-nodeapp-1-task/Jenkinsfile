@@ -21,7 +21,7 @@ pipeline {
 
       stage('Build a Docker Image'){
         steps {
-            sh "docker build -t node-application:$BUILD_NUMBER .";
+            sh "docker build -t node-application:$BUILD_NUMBER ./test-nodeapp-1-task";
         }
       }
 
