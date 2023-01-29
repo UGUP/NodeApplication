@@ -48,10 +48,10 @@ pipeline {
   steps {
     def apphost_tag = sh(script: "docker images --format \"{{.CreatedAt}}\t{{.Repository}}:{{.Tag}}\" | sort -r | head -n 1 | awk -F \":\" '{print $NF}' | awk -F \"v\" '{print $NF}'", returnStdout: true).trim()
          if(apphost_tag < ${BUILD_NUMBER}){
-          doker stop node-app
+          sh "doker stop node-app"
          }
          else{
-            docker run -itd -p 8080:8081  v${BUILD_NUMBER}
+           sh "docker run -itd -p 8080:8081  v${BUILD_NUMBER}"
          }
       }
     }
