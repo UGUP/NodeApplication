@@ -31,7 +31,7 @@ pipeline
         sh "docker push 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
       }
     }
-    stage{
+    stage('Update Packages on App Host'){
     agent { label 'node-app' }
      steps {
        sh "sudo apt-get update"
