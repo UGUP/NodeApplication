@@ -30,8 +30,36 @@ pipeline {
         sh "docker push 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
       }
     }
+    stage('SSH to APP host'){
+     steps {
+    sshagent(['git-cred']) {
+      sh 'ssh -t ubuntu@10.0.2.94 "sudo su -"'
+    }
   }
- }
+  stage('Pull latest image from ECR'){
+  steps {
+    sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 374911492262.dkr.ecr.us-east-1.amazonaws.com"
+    sh "docker pull 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
+   
+    }
+  }
+
+  stage('Get the older image build number and verify it with new build number') {
+  steps {
+    def apphost_tag = sh(script: "docker images --format \"{{.CreatedAt}}\t{{.Repository}}:{{.Tag}}\" | sort -r | head -n 1 | awk -F \":\" '{print $NF}' | awk -F \"v\" '{print $NF}'", returnStdout: true).trim()
+         if(apphost_tag < ${BUILD_NUMBER}){
+          doker stop node-app
+         }
+         else{
+            docker run -itd -p 8080:8081  v${BUILD_NUMBER}
+         }
+      }
+    }
+  }
+}
+}
+ 
+ 
 
 
 
