@@ -16,20 +16,18 @@ pipeline {
                 sh "pwd"
             }  
         }
-      }
-  
-
+      } 
       stage('Build a Docker Image'){
         steps {
-            sh "docker build -t node-application:$BUILD_NUMBER ./test-nodeapp-1-task";
+            sh "docker build -t node-application:v${BUILD_NUMBER} ./test-nodeapp-1-task";
         }
       }
 
       stage('Push Docker Image to ECR') {
       steps {
         sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 374911492262.dkr.ecr.us-east-1.amazonaws.com"
-        sh  "docker tag node-application:$BUILD_NUMBER 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:$BUILD_NUMBER"
-        sh "docker push 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:$BUILD_NUMBER"
+        sh  "docker tag node-application:v${BUILD_NUMBER} 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
+        sh "docker push 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
       }
     }
   }
