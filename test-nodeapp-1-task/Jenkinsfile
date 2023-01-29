@@ -34,7 +34,7 @@ pipeline
 
      stage('SSH to APP host'){
      steps {
-    sshagent(['git-cred']) {
+    sshagent(['Jenkins-server']) {
       sh 'ssh -t ubuntu@10.0.2.94 "sudo su -"'
     }
   }
