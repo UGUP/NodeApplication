@@ -10,11 +10,13 @@ pipeline {
                 }
             }
         }
-       stage('Checkout code') {
+       stage('Change directory') {
            steps {
-               checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:UGUP/NodeApplication.git']]])
+            
                dir('test-nodeapp-1-task') {
-          // checkout to the specific branch or commit if needed
+                script{
+                    sh cd ./test-nodeapp-1-task
+                }
         }
       }
     }
