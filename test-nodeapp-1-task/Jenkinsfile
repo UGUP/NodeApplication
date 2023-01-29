@@ -21,7 +21,7 @@ pipeline {
       stage('Build a Docker Image'){
         steps {
             script{
-                   dockerImage = docker .build node-application 
+                   dockerImage = docker.build node-application 
             }
         }
       }
