@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sshagent(['git-cred']) {
                     git branch: 'main',
-                    credentialsId: 'git-cred',
+                    credentialsId: 'git',
                     url: 'git@github.com:UGUP/NodeApplication.git'
                 }
             }
