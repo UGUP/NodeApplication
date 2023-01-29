@@ -17,7 +17,15 @@ pipeline {
             }  
         }
       }
-    }
+
+      stage('Build a Docker Image'){
+        steps {
+            script{
+                   sh 'docker build -t node-application:${env.BUILD_NUMBER} .'
+            }
+        }
+      }
+    
     // stage('Build and Push Docker Image') {
     //   steps {
     //     script {
@@ -31,3 +39,4 @@ pipeline {
     // }
    }
 
+}
