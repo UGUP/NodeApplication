@@ -1,10 +1,19 @@
 pipeline {
-  agent any
-  stages {
-    stage('Checkout code') {
-      steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:UGUP/NodeApplication.git']]])
-        dir('test-nodeapp-1-task') {
+    agent any
+    stages {
+        stage('Clone') {
+            steps {
+                sshagent(['sshcredentials5']) {
+                    git branch: 'main',
+                    credentialsId: 'sshcredentials5',
+                    url: 'git@github.com:UGUP/NodeApplication.git'
+                }
+            }
+        }
+       stage('Checkout code') {
+           steps {
+               checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:UGUP/NodeApplication.git']]])
+               dir('test-nodeapp-1-task') {
           // checkout to the specific branch or commit if needed
         }
       }
@@ -20,5 +29,5 @@ pipeline {
         }
       }
     }
-  }
+   }
 }
