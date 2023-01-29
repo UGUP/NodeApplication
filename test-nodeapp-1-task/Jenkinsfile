@@ -1,12 +1,12 @@
 pipeline {
-    agent { label 'my-label' }
+    agent any
     stages {
         stage('Clone') {
             steps {
-                sshagent(['sshcredentials']) {
+                sshagent(['sshcredentials3']) {
                     git branch: 'main',
-                    credentialsId: 'sshcredentials',
-                    url: 'https://github.com/UGUP/NodeApplication.git'
+                    credentialsId: 'sshcredentials3',
+                    url: 'git@github.com:UGUP/NodeApplication.git'
                 }
             }
         }
