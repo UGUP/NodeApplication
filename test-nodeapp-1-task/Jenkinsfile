@@ -17,15 +17,15 @@ pipeline {
             }  
         }
       }
-       stage('Install Sudo') {
-            steps {
-                sh 'apt-get update && apt-get install sudo -y'
-            }
-        }
+    //    stage('Install Sudo') {
+    //         steps {
+    //             sh 'apt-get update && apt-get install sudo -y'
+    //         }
+    //     }
 
         stage('Install Docker') {
             steps {
-                sh 'sudo apt-get update && sudo apt-get install docker.io -y'
+                sh 'apt-get update && sudo apt-get install docker.io -y'
             }
         }
 
