@@ -10,14 +10,14 @@ pipeline {
                 }
             }
         }
-    //    stage('Checkout code') {
-    //        steps {
-    //            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:UGUP/NodeApplication.git']]])
-    //            dir('test-nodeapp-1-task') {
-    //       // checkout to the specific branch or commit if needed
-    //     }
-    //   }
-    // }
+       stage('Checkout code') {
+           steps {
+               checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:UGUP/NodeApplication.git']]])
+               dir('test-nodeapp-1-task') {
+          // checkout to the specific branch or commit if needed
+        }
+      }
+    }
     // stage('Build and Push Docker Image') {
     //   steps {
     //     script {
