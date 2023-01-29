@@ -21,7 +21,7 @@ pipeline {
       stage('Build a Docker Image'){
         steps {
             script{
-                   sh 'docker build -t node-application:${env.BUILD_NUMBER} .'
+                   dockerImage = docker build -t node-application:${env.BUILD_NUMBER} .
             }
         }
       }
