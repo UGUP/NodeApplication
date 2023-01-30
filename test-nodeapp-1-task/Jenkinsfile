@@ -37,12 +37,13 @@ pipeline
 //        sh "sudo apt-get update"
 //   }
 // }
-
+stage(" SSH into App host"){
  steps {
         sshagent(['Jenkins-server']) {
                 sh "sudo apt-get update"
                 }
        }
+}
   // stage('Pull latest image from ECR'){
   //  agent { label 'node-app' }
   // steps {
