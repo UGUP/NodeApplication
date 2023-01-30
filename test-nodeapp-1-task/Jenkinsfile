@@ -1,5 +1,4 @@
-pipeline 
-{
+pipeline {
     agent { label 'Jenkins-server' }
     stages {         
         stage('Clone') {
@@ -31,45 +30,30 @@ pipeline
         sh "docker push 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
       }
     }
+  }
+  stages{
+    environment { 
+      AN_ACCESS_KEY = credentials('App-Host') 
+      sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
     }
-
-    stages{
-        environment { 
-                AN_ACCESS_KEY = credentials('App-Host') 
-                sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
-            }
-    //  stage("SSH into App host") {
-    //       steps {
-    //         sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
-    //      }
-    //     }
-       stage('Pull latest image from ECR and run Docker container in App host'){
-          steps {
-              sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
-              sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 374911492262.dkr.ecr.us-east-1.amazonaws.com"
-              sh "docker pull 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
-         }
-       }
-     stage('Replace old Docker Image'){
+    stage('Pull latest image from ECR and run Docker container in App host'){
+      steps {
+        sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 374911492262.dkr.ecr.us-east-1.amazonaws.com"
+        sh "docker pull 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
+      }
+    }
+    stage('Replace old Docker Image'){
       steps{
           script{  
              def result = sh(script: "docker inspect --format '{{.State.Running}}' node-application", returnStatus: true)
-             sh "echo the vaue of result is ${result}"
-                if(result == 0){
+             sh "echo the value of result is ${result}"
+             if(result == 0){
                 sh "echo i am in if loop"
                 sh "docker stop node-application"
                 sh "docker rm node-application"
-      }
-    }
-    sh "docker run -itd --name node-application 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
-  } 
-}  
-}
- }
-
-
- 
- 
-
-
-
+             }
+           }
+           sh "docker run -itd --name node-application 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
+         } 
+       }
+     }
