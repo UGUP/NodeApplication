@@ -60,7 +60,7 @@ stage('Verify Old Image and run conatiner with new Image'){
         sh "docker rm node-application"
       }
     }
-    sh "docker run --name node-application 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
+    sh "docker run -it --name node-application 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
   } 
 }
 
