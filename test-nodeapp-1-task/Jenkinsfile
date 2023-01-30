@@ -1,5 +1,8 @@
 pipeline {
     agent { label 'Jenkins-server' }
+        environment { 
+                AN_ACCESS_KEY = credentials('App-Host') 
+        }
     stages {         
         stage('Clone') {
             steps {
@@ -30,14 +33,14 @@ pipeline {
         sh "docker push 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
       }
     }
-    stage('Set environment variables') {
-        environment { 
-                AN_ACCESS_KEY = credentials('App-Host') 
-        }
-        steps {
-            sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
-        }
-    }
+    // stage('Set environment variables') {
+    //     environment { 
+    //             AN_ACCESS_KEY = credentials('App-Host') 
+    //     }
+    //     steps {
+    //         sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
+    //     }
+    // }
     stage('Pull latest image from ECR and run Docker container in App host'){
           steps {
               sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
