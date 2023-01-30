@@ -65,6 +65,6 @@ pipeline {
           sh "docker run -itd --name node-application 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
       }
     }
-     }
+  }
     }
 }
