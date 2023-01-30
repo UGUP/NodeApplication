@@ -39,9 +39,8 @@ pipeline
 // }
 stage(" SSH into App host"){
  steps {
-        sshagent(['Jenkins-server']) {
-                sh "sudo apt-get update"
-                }
+        sh "ssh -i sshagent([Jenkins-server])} ubuntu@10.0.2.94"
+
        }
 }
   // stage('Pull latest image from ECR'){
