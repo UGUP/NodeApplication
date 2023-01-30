@@ -2,9 +2,7 @@ pipeline
 {
     agent { label 'Jenkins-server' }
     stages {
-            environment { 
-                AN_ACCESS_KEY = credentials('App-Host') 
-            }
+           
         stage('Clone') {
             steps {
                 sshagent(['git-cred']) {
@@ -43,6 +41,9 @@ pipeline
   //  }
 
   stage('Pull latest image from ECR and run Docker container in App host'){
+     environment { 
+                AN_ACCESS_KEY = credentials('App-Host') 
+            }
   steps {
     sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
     sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 374911492262.dkr.ecr.us-east-1.amazonaws.com"
@@ -51,6 +52,9 @@ pipeline
   }
 
 stage('Verify Old Image and run conatiner with new Image'){
+   environment { 
+                AN_ACCESS_KEY = credentials('App-Host') 
+            }
   steps{
     sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
     script{
