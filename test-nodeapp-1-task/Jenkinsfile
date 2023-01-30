@@ -37,16 +37,29 @@ pipeline
 //        sh "sudo apt-get update"
 //   }
 // }
+// stage("SSH into App host") {
+//   steps {
+//     script{
+//     def sshCredentials = credentials('Jenkins-server')
+//     sshagent([sshCredentials]) {
+//       sh "ssh -i ${sshCredentials.privateKey} ubuntu@10.0.2.94"
+//     }
+//   }
+//   }
+// }
+
 stage("SSH into App host") {
   steps {
-    script{
-    def sshCredentials = credentials('Jenkins-server')
-    sshagent([sshCredentials]) {
-      sh "ssh -i ${sshCredentials.privateKey} ubuntu@10.0.2.94"
-    }
+     environment { 
+                AN_ACCESS_KEY = credentials('Jenkins-server') 
+            }
+            sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
   }
-  }
+
 }
+
+
+
 
   // stage('Pull latest image from ECR'){
   //  agent { label 'node-app' }
