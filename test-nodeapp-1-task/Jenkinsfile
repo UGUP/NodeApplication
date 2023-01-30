@@ -50,6 +50,12 @@ pipeline
   }
 
 stage('Verify Old Image and run conatiner with new Image'){
+    environment { 
+                AN_ACCESS_KEY = credentials('App-Host') 
+            }
+     steps {
+            sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
+     }
   steps{
     script{
       def result = sh(script: "docker inspect --format '{{.State.Running}}' node-application", returnStatus: true)
