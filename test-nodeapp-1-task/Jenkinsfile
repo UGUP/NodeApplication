@@ -46,7 +46,18 @@ pipeline
   steps {
     sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 374911492262.dkr.ecr.us-east-1.amazonaws.com"
     sh "docker pull 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
-    sh "docker run -itd --name node-application 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
+    }
+  }
+
+  stage('Verify Old Image and run conatiner with new Image'){
+    steps{
+      if(docker inspect --format '{{.State.Running}}' node-application){
+        sh "docker stop node-application"
+        sh "docker rm node-application"
+      }
+      else{
+          sh "docker run -itd --name node-application 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
+      }
     }
   }
 
