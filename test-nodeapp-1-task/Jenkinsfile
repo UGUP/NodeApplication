@@ -49,10 +49,11 @@ pipeline
 // }
 
 stage("SSH into App host") {
-  steps {
-     environment { 
+    environment { 
                 AN_ACCESS_KEY = credentials('Jenkins-server') 
             }
+  steps {
+   
             sh "ssh -i ${AN_ACCESS_KEY}  ubuntu@10.0.2.94"
   }
 
