@@ -57,9 +57,10 @@ pipeline {
                 if(result == 0){
                 sh "echo i am in if loop"
                 sh "docker stop node-application"
-               
+                sh "docker rm node-application"              
                 }
           }
+          sh "docker run -itd --name node-application 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
       }
      }
     }
