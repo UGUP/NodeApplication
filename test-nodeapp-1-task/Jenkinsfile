@@ -53,7 +53,7 @@ stage('Verify Old Image and run conatiner with new Image'){
   steps{
     script{
       def result = sh(script: "docker inspect --format '{{.State.Running}}' node-application", returnStatus: true)
-      if(result == 0){
+      if(result == true){
         sh "docker stop node-application"
         sh "docker rm node-application"
       }
