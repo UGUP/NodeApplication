@@ -51,7 +51,7 @@ pipeline
 
   stage('Verify Old Image and run conatiner with new Image'){
     steps{
-      if(docker inspect --format '{{.State.Running}}' node-application){
+      if(sh "docker inspect --format '{{.State.Running}}' node-application"){
         sh "docker stop node-application"
         sh "docker rm node-application"
       }
