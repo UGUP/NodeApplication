@@ -41,12 +41,12 @@ pipeline
      }
    }
 
-  stage('Pull latest image from ECR'){
+  stage('Pull latest image from ECR and run Docker container in App host'){
    agent { label 'node-app' }
   steps {
     sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 374911492262.dkr.ecr.us-east-1.amazonaws.com"
     sh "docker pull 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"
-   
+    sh "docker run -itd --name node-application node-application:v${BUILD_NUMBER}"
     }
   }
 
