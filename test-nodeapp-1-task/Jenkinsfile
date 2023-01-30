@@ -39,14 +39,10 @@ pipeline
 // }
 stage("SSH into App host") {
   steps {
-    script{
-    def credentialsId = "Jenkins-server"
-    withCredentials([string(credentialsId: credentialsId, variable: 'CREDENTIALS_ID')]) {
-      sshagent(['Jenkins-server']) {
-        sh "ssh -i ${CREDENTIALS_ID} ubuntu@10.0.2.94"
-      }
+    def sshCredentials = credentials('Jenkins-server')
+    sshagent([sshCredentials]) {
+      sh "ssh -i ${sshCredentials.privateKey} ubuntu@10.0.2.94"
     }
-  }
   }
 }
 
