@@ -6,7 +6,7 @@ pipeline {
     stages {         
         stage('Clone') {
             steps {
-                sshagent(['git-cred']) {
+                sshagent(['git']) {
                     git branch: 'main',
                     credentialsId: 'git',
                     url: 'git@github.com:UGUP/NodeApplication.git'
