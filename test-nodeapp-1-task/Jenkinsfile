@@ -44,7 +44,7 @@ pipeline {
      stage('Replace old Docker Image'){
       steps{
           script{  
-             def result = sh(script: 'ssh -i ${AN_ACCESS_KEY} ubuntu@10.0.2.94 "docker inspect --format `{{.State.Running}}` node-application"', returnStatus: true)
+             def result = sh(script: `ssh -i ${AN_ACCESS_KEY} ubuntu@10.0.2.94 "docker inspect --format '{{.State.Running}}' node-application"`, returnStatus: true)
              sh "echo the vaue of result is ${result}"
                 if(result == 0){
                 sh 'ssh -i ${AN_ACCESS_KEY} ubuntu@10.0.2.94 "docker stop node-application"'
