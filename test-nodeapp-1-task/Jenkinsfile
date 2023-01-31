@@ -49,10 +49,10 @@ pipeline {
                 if(result == 0){
                 sh 'ssh -i ${AN_ACCESS_KEY} ubuntu@10.0.2.94 "docker stop node-application"'
                 sh 'ssh -i ${AN_ACCESS_KEY} ubuntu@10.0.2.94 "docker rm node-application"'  
-                sh 'ssh -i ${AN_ACCESS_KEY} ubuntu@10.0.2.94 "docker run -itd --name node-application 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"'            
+                sh 'ssh -i ${AN_ACCESS_KEY} ubuntu@10.0.2.94 "docker run -itd --name node-application -p 8081:8081 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"'            
                 }
                 else{
-                  sh 'ssh -i ${AN_ACCESS_KEY} ubuntu@10.0.2.94 "docker run -itd --name node-application 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"'
+                  sh 'ssh -i ${AN_ACCESS_KEY} ubuntu@10.0.2.94 "docker run -itd --name node-application -p 8081:8081 374911492262.dkr.ecr.us-east-1.amazonaws.com/node-application:v${BUILD_NUMBER}"'
                 }
           }
           
